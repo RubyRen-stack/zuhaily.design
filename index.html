@@ -309,18 +309,24 @@
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
             background: #0f1114;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 400px;
+        }
+        .slider-container {
+            display: flex;
+            transition: transform 0.8s ease-in-out;
+            height: 100%;
         }
         .slide {
-            display: none;
-            width: 100%;
-            height: 350px;
+            min-width: 100%;
+            height: 100%;
+            display: flex;
             justify-content: center;
             align-items: center;
             background: #0f1114;
-            overflow: hidden;
-        }
-        .slide.active {
-            display: flex;
+            flex-shrink: 0;
         }
         .slide img {
             max-width: 100%;
@@ -488,8 +494,8 @@
                 width: 100%;
                 gap: 1rem;
             }
-            .slide {
-                height: 280px;
+            .gallery-slider {
+                height: 300px;
             }
             .slider-btn {
                 padding: 0.5rem;
@@ -520,8 +526,8 @@
                 flex-direction: column;
                 gap: 1.5rem;
             }
-            .slide {
-                height: 220px;
+            .gallery-slider {
+                height: 250px;
             }
             .skills-grid, .services-grid {
                 grid-template-columns: 1fr;
@@ -623,18 +629,38 @@
     <section id="portfolio" class="portfolio">
         <h2 data-lang-id="portfolio_title">Portfolio</h2>
         <div class="gallery-slider">
-            <!-- Cara menggunakan: Ganti URL di src dengan link gambar kamu -->
-            <!-- Bisa pakai link dari Google Drive, Imgur, atau URL gambar lainnya -->
-            <div class="slide active">
-                <img src="https://id.pinterest.com/pin/1036672407977170292/" alt="Work 1">
+            <!-- Cara menggunakan: Letakkan gambar portfolio di folder 'src' -->
+            <!-- Kemudian ganti nama file di bawah sesuai nama file gambar Anda -->
+            <!-- Contoh: src/portfolio1.jpg, src/portfolio2.png, dll -->
+            
+            <div class="slider-container" id="sliderContainer">
+                <div class="slide">
+                    <img src="src/slide_1.jpg" alt="Portfolio 1">
+                </div>
+                <div class="slide">
+                    <img src="src/slide_2.jpg" alt="Portfolio 2">
+                </div>
+                <div class="slide">
+                    <img src="src/slide_3.jpg" alt="Portfolio 3">
+                </div>
+                <div class="slide">
+                    <img src="src/slide_4.jpg" alt="Portfolio 4">
+                </div>
+                <div class="slide">
+                    <img src="src/slide_5.jpg" alt="Portfolio 5">
+                </div>
+                <div class="slide">
+                    <img src="src/slide_6.jpg" alt="Portfolio 6">
+                </div>
             </div>
+            
+            <!-- Untuk menambah slide baru, copy-paste struktur ini di dalam slider-container: -->
+            <!-- 
             <div class="slide">
-                <img src="https://via.placeholder.com/600x800" alt="Work 2">
+                <img src="src/NAMA_FILE_GAMBAR.jpg" alt="Deskripsi">
             </div>
-            <div class="slide">
-                <img src="https://via.placeholder.com/1200x400" alt="Work 3">
-            </div>
-            <!-- Tambah slide baru: Copy-paste div slide di atas, ganti URL gambarnya -->
+            -->
+            
             <button class="slider-btn prev">❮</button>
             <button class="slider-btn next">❯</button>
         </div>
@@ -763,31 +789,79 @@
             changeLanguage(savedLang);
         });
 
-        // Slider functionality
+        // Slider functionality with infinite loop (always sliding right)
         let currentSlide = 0;
+        const sliderContainer = document.getElementById('sliderContainer');
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
+        let autoSlideInterval;
 
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
+        function updateSlider() {
+            const offset = -currentSlide * 100;
+            sliderContainer.style.transform = `translateX(${offset}%)`;
         }
 
         function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
+            currentSlide++;
+            
+            // Smooth transition
+            sliderContainer.style.transition = 'transform 0.8s ease-in-out';
+            updateSlider();
+            
+            // Reset to first slide without animation when reaching the end
+            if (currentSlide >= totalSlides) {
+                setTimeout(() => {
+                    sliderContainer.style.transition = 'none';
+                    currentSlide = 0;
+                    updateSlider();
+                }, 800);
+            }
         }
 
         function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
+            currentSlide--;
+            
+            if (currentSlide < 0) {
+                sliderContainer.style.transition = 'none';
+                currentSlide = totalSlides - 1;
+                updateSlider();
+                setTimeout(() => {
+                    sliderContainer.style.transition = 'transform 0.8s ease-in-out';
+                }, 50);
+            } else {
+                sliderContainer.style.transition = 'transform 0.8s ease-in-out';
+                updateSlider();
+            }
         }
 
-        document.querySelector('.next').addEventListener('click', nextSlide);
-        document.querySelector('.prev').addEventListener('click', prevSlide);
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
+        }
 
-        // Auto-slide every 5 seconds
-        setInterval(nextSlide, 5000);
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        // Button controls
+        document.querySelector('.next').addEventListener('click', function() {
+            stopAutoSlide();
+            nextSlide();
+            startAutoSlide();
+        });
+
+        document.querySelector('.prev').addEventListener('click', function() {
+            stopAutoSlide();
+            prevSlide();
+            startAutoSlide();
+        });
+
+        // Start auto-slide on page load
+        startAutoSlide();
+
+        // Pause on hover
+        const gallerySlider = document.querySelector('.gallery-slider');
+        gallerySlider.addEventListener('mouseenter', stopAutoSlide);
+        gallerySlider.addEventListener('mouseleave', startAutoSlide);
 
         // Mobile menu toggle
         const menuToggle = document.getElementById('menuToggle');
