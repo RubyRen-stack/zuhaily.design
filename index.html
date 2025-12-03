@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zuhaily - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #1a1a1a;
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .logo {
+            height: 35px;
+            border-radius: 5px;
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .lang-toggle {
+            background-color: #00d4ff;
+            color: #121212;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-left: 1rem;
+        }
+        .lang-toggle:hover {
+            background-color: #00a8cc;
+            transform: scale(1.05);
+        }
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-menu a:hover {
+            color: #00d4ff;
+        }
+
+        section {
+            padding: 4rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 6rem;
+            min-height: 100vh;
+            gap: 4rem;
+        }
+        .hero-text {
+            flex: 1;
+            padding-right: 3rem;
+            max-width: 600px;
+        }
+        .hero-text h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+        .hero-text p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            margin-bottom: 2rem;
+        }
+        .hero-btn {
+            background-color: #00d4ff;
+            color: #121212;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        .hero-btn:hover {
+            background-color: #00a8cc;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .social-links a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .social-links a:hover {
+            background-color: #00d4ff;
+            color: #121212;
+            transform: translateY(-3px);
+        }
+        .social-links a img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+        .hero-img {
+            flex: 1;
+            text-align: center;
+            max-width: 500px;
+        }
+        .hero-img img {
+            width: 100%;
+            height: auto;
+            max-width: 450px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            object-fit: cover;
+            aspect-ratio: 1/1;
+        }
+        .about {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+        .about-text {
+            flex: 1;
+            padding-right: 3rem;
+            max-width: 600px;
+        }
+        .about-text h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+        .about-text p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            text-align: justify;
+            color: #e0e0e0;
+        }
+        .about-text p:last-of-type {
+            margin-bottom: 1.5rem;
+        }
+        .about-paragraph {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            text-align: justify;
+            color: #e0e0e0;
+            padding-left: 1rem;
+            border-left: 3px solid #00d4ff;
+            background: rgba(26, 26, 26, 0.3);
+            padding: 0.8rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .about-paragraph:hover {
+            background: rgba(26, 26, 26, 0.5);
+            border-left-color: #00a8cc;
+            transform: translateX(5px);
+        }
+        .stats {
+            display: flex;
+            gap: 2rem;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: #00d4ff;
+        }
+        .about-img {
+            flex: 1;
+            text-align: center;
+            max-width: 500px;
+        }
+        .about-img img {
+            width: 100%;
+            height: auto;
+            max-width: 450px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            object-fit: cover;
+            aspect-ratio: 1/1;
+        }
+        .skills {
+            text-align: center;
+        }
+        .skills h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+            color: #00d4ff;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .skill-card {
+            background-color: #1a1a1a;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        .skill-card:hover {
+            transform: translateY(-10px);
+        }
+        .skill-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+        .skill-card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+        .services {
+            text-align: center;
+        }
+        .services h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+            color: #00d4ff;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .service-card {
+            background-color: #1a1a1a;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            transition: transform 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        .service-card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+        .portfolio {
+            text-align: center;
+        }
+        .portfolio h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+            color: #00d4ff;
+        }
+        .gallery-slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            background: #0f1114;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            height: 350px;
+            justify-content: center;
+            align-items: center;
+            background: #0f1114;
+            overflow: hidden;
+        }
+        .slide.active {
+            display: flex;
+        }
+        .slide img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            object-position: center;
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s;
+            z-index: 10;
+        }
+        .slider-btn:hover {
+            background-color: rgba(0, 212, 255, 0.5);
+        }
+        .prev {
+            left: 0;
+        }
+        .next {
+            right: 0;
+        }
+        .contact {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .contact h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+        .contact > p:first-of-type {
+            color: #b0b0b0;
+            margin-bottom: 2.5rem;
+            font-size: clamp(0.95rem, 2vw, 1rem);
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .contact-card {
+            background: rgba(26, 26, 26, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .contact-card:hover {
+            border-color: #00d4ff;
+            transform: translateY(-3px);
+        }
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+        }
+        .contact-label {
+            color: #00d4ff;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        .contact-value {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            word-break: break-all;
+            margin-bottom: 0.6rem;
+        }
+        .copy-btn {
+            background-color: #00d4ff;
+            color: #121212;
+            padding: 0.5rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: clamp(0.85rem, 2vw, 0.9rem);
+            width: 100%;
+            max-width: 130px;
+        }
+        .copy-btn:hover {
+            background-color: #00a8cc;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #1a1a1a;
+        }
+        @media (max-width: 768px) {
+            header {
+                padding: 0.8rem 0;
+            }
+            .logo {
+                height: 30px;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .lang-toggle {
+                position: absolute;
+                top: 50%;
+                right: 4rem;
+                transform: translateY(-50%);
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                background-color: #1a1a1a;
+                flex-direction: column;
+                gap: 0;
+                padding: 2rem 0;
+                transition: left 0.3s ease;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-menu li {
+                padding: 1rem 2rem;
+                border-bottom: 1px solid #2a2a2a;
+            }
+            .nav-menu a {
+                font-size: 1.1rem;
+            }
+            .hero, .about {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 5rem;
+                gap: 2rem;
+            }
+            .hero-text, .about-text {
+                padding-right: 0;
+                max-width: 100%;
+            }
+            .hero-img, .about-img {
+                max-width: 100%;
+            }
+            .hero-img img, .about-img img {
+                max-width: 350px;
+            }
+            .stats {
+                flex-direction: row;
+                justify-content: space-around;
+                width: 100%;
+                gap: 1rem;
+            }
+            .slide {
+                height: 280px;
+            }
+            .slider-btn {
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+            .contact {
+                padding: 3rem 1.5rem;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+            .contact-card {
+                padding: 1.5rem 1.2rem;
+            }
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo {
+                height: 25px;
+            }
+            .menu-toggle {
+                font-size: 1.3rem;
+            }
+            .stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .slide {
+                height: 220px;
+            }
+            .skills-grid, .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="src/logoz.png" alt="Logo" class="logo">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" data-lang-id="nav_home">Home</a></li>
+                <li><a href="#about" data-lang-id="nav_about">About</a></li>
+                <li><a href="#skills" data-lang-id="nav_skills">Skills</a></li>
+                <li><a href="#services" data-lang-id="nav_services">Services</a></li>
+                <li><a href="#portfolio" data-lang-id="nav_portfolio">Portfolio</a></li>
+                <li><a href="#contact" data-lang-id="nav_contact">Contact</a></li>
+            </ul>
+            <button class="lang-toggle" id="langToggle">🌐 ID</button>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-text">
+            <h1 data-lang-id="hero_title">Hello, I'm <br>Zuhaily zuhnun.</h1>
+            <p data-lang-id="hero_subtitle">UI/UX & Graphic Designer based in Indonesia.</p>
+            <a href="#portfolio"><button class="hero-btn" data-lang-id="hero_btn">View Portfolio</button></a>
+            <div class="social-links">
+                <a href="https://www.instagram.com/zuhailyxd/" target="_blank">
+                    <img src="src/instagram_icon.png" alt="Instagram">
+                    Instagram
+                </a>
+                <a href="https://id.pinterest.com/ZuhailyXD/_created/" target="_blank">
+                    <img src="src/pinterest_icon.png" alt="Pinterest">
+                    Pinterest
+                </a>
+                <!-- Tambahkan link sosial media lainnya di sini -->
+            </div>
+        </div>
+        <div class="hero-img">
+            <img src="src/saya.png" alt="Hero Image">
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-text">
+            <h2 data-lang-id="about_title">About Me</h2>
+            <p data-lang-id="about_desc">I am a passionate UI/UX and Graphic Designer with a keen eye for detail and a love for creating visually stunning and user-friendly designs. With experience in various tools and projects, I strive to deliver high-quality work that meets client needs.</p>
+            <div class="stats">
+                <div class="stat">
+                    <h3>3+</h3>
+                    <p data-lang-id="about_exp">Years Experience</p>
+                </div>
+            </div>
+        </div>
+        <div class="about-img">
+            <img src="src/guaduduk.png" alt="About Image">
+        </div>
+    </section>
+
+    <section id="skills" class="skills">
+        <h2 data-lang-id="skills_title">Skills</h2>
+        <!-- Catatan: Untuk menambah skill, cukup copy-paste satu div skill-card di bawah ini dan muncul otomatis. -->
+        <div class="skills-grid">
+            <div class="skill-card">
+                <img src="src/coreldraw-seeklogo.png" alt="CorelDRAW">
+                <h3>CorelDRAW</h3>
+                <p>Editing, Vectoring, Layout.</p>
+            </div>
+            <div class="skill-card">
+                <img src="src/sketchup.png" alt="SketchUp">
+                <h3>SketchUp</h3>
+                <p>Basic – Modeling, Measurement, Simple Layout.</p>
+            </div>
+            <!-- Tambahkan skill baru di sini -->
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <h2 data-lang-id="services_title">Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3 data-lang-id="service1_title">UI & UX Design</h3>
+                <p data-lang-id="service1_desc">Creating intuitive and engaging user interfaces and experiences.</p>
+            </div>
+            <div class="service-card">
+                <h3 data-lang-id="service2_title">Graphic Design</h3>
+                <p data-lang-id="service2_desc">Designing logos, posters, and other visual materials.</p>
+            </div>
+            <div class="service-card">
+                <h3 data-lang-id="service3_title">Icon Vector</h3>
+                <p data-lang-id="service3_desc">Create Icon Vector Graphics</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio">
+        <h2 data-lang-id="portfolio_title">Portfolio</h2>
+        <div class="gallery-slider">
+            <!-- Cara menggunakan: Ganti URL di src dengan link gambar kamu -->
+            <!-- Bisa pakai link dari Google Drive, Imgur, atau URL gambar lainnya -->
+            <div class="slide active">
+                <img src="https://id.pinterest.com/pin/1036672407977170292/" alt="Work 1">
+            </div>
+            <div class="slide">
+                <img src="https://via.placeholder.com/600x800" alt="Work 2">
+            </div>
+            <div class="slide">
+                <img src="https://via.placeholder.com/1200x400" alt="Work 3">
+            </div>
+            <!-- Tambah slide baru: Copy-paste div slide di atas, ganti URL gambarnya -->
+            <button class="slider-btn prev">❮</button>
+            <button class="slider-btn next">❯</button>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 data-lang-id="contact_title">Contact</h2>
+        <p data-lang-id="contact_subtitle">Let's work together! Reach out to me</p>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">📱</div>
+                <div class="contact-label" data-lang-id="contact_phone">Nomor HP</div>
+                <div class="contact-value">085343772841</div>
+                <button class="copy-btn" onclick="copyText('085343772841')" data-lang-id="copy_btn">Copy</button>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">✉️</div>
+                <div class="contact-label">Email</div>
+                <div class="contact-value">zuhailyid@gmail.com</div>
+                <button class="copy-btn" onclick="copyText('zuhailyid@gmail.com')" data-lang-id="copy_btn">Copy</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Zuhaily. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Language translations
+        const translations = {
+            id: {
+                nav_home: 'Beranda',
+                nav_about: 'Tentang',
+                nav_skills: 'Keahlian',
+                nav_services: 'Layanan',
+                nav_portfolio: 'Portofolio',
+                nav_contact: 'Kontak',
+                hero_title: 'Halo, Saya <br>Zuhaily zuhnun.',
+                hero_subtitle: 'Desainer UI/UX & Grafis dari Indonesia.',
+                hero_btn: 'Lihat Portofolio',
+                about_title: 'Tentang Saya',
+                about_desc: 'Saya adalah desainer kreatif sejak remaja yang terus berkembang hingga sekarang. Pernah meraih juara 2 dan 3 dalam kompetisi desain, serta mengerjakan berbagai proyek seperti logo, poster, dan 3D drawing mesin pabrik (basic).\n\nBagi saya, desain adalah cara menyampaikan pesan yang kuat dan membangun identitas visual bermakna. Saya terus belajar dan siap menerima tantangan baru.',
+                about_exp: 'Tahun Pengalaman',
+                skills_title: 'Keahlian',
+                services_title: 'Layanan',
+                service1_title: 'Desain UI & UX',
+                service1_desc: 'Menciptakan antarmuka modern dan pengalaman pengguna yang mulus, intuitif, dan nyaman digunakan.',
+                service2_title: 'Desain Grafis',
+                service2_desc: 'Membuat logo, poster, dan berbagai materi visual yang kuat, estetik, dan sesuai kebutuhan brand.',
+                service3_title: 'Vektor Ikon',
+                service3_desc: 'Merancang ikon vektor yang rapi, bersih, dan siap digunakan untuk aplikasi, website, maupun kebutuhan visual lainnya.',
+                portfolio_title: 'Portofolio',
+                contact_title: 'Kontak',
+                contact_subtitle: 'Mari bekerja sama! Hubungi saya',
+                contact_phone: 'Nomor HP',
+                copy_btn: 'Salin'
+            },
+            en: {
+                nav_home: 'Home',
+                nav_about: 'About',
+                nav_skills: 'Skills',
+                nav_services: 'Services',
+                nav_portfolio: 'Portfolio',
+                nav_contact: 'Contact',
+                hero_title: 'Hello, I\'m <br>Zuhaily zuhnun.',
+                hero_subtitle: 'UI/UX & Graphic Designer based in Indonesia.',
+                hero_btn: 'View Portfolio',
+                about_title: 'About Me',
+                about_desc: 'I am a creative designer since my teenage years, continuously growing to this day. I have won 2nd and 3rd place in design competitions and worked on various projects such as logos, posters, and basic 3D factory machine drawings.\n\nFor me, design is a way to convey powerful messages and build meaningful visual identities. I continue to learn and embrace new challenges.',
+                about_exp: 'Years Experience',
+                skills_title: 'Skills',
+                services_title: 'Services',
+                service1_title: 'UI & UX Design',
+                service1_desc: 'Creating modern interfaces and seamless, intuitive, and comfortable user experiences.',
+                service2_title: 'Graphic Design',
+                service2_desc: 'Creating logos, posters, and various visual materials that are strong, aesthetic, and suit brand needs.',
+                service3_title: 'Icon Vector',
+                service3_desc: 'Designing clean, neat vector icons ready to use for applications, websites, and other visual needs.',
+                portfolio_title: 'Portfolio',
+                contact_title: 'Contact',
+                contact_subtitle: 'Let\'s work together! Reach out to me',
+                contact_phone: 'Phone Number',
+                copy_btn: 'Copy'
+            }
+        };
+
+        // Current language (default: English)
+        let currentLang = 'en';
+
+        // Function to change language
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const elements = document.querySelectorAll('[data-lang-id]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-lang-id');
+                if (translations[lang][key]) {
+                    // Check if it's the about_desc to add paragraph breaks
+                    if (key === 'about_desc') {
+                        const paragraphs = translations[lang][key].split('\n\n');
+                        element.innerHTML = paragraphs.map(p => `<p class="about-paragraph">${p}</p>`).join('');
+                    } else {
+                        element.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+
+            // Update button text
+            const langToggle = document.getElementById('langToggle');
+            langToggle.innerHTML = lang === 'en' ? '🌐 ID' : '🌐 EN';
+            
+            // Save preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Language toggle button
+        document.getElementById('langToggle').addEventListener('click', function() {
+            const newLang = currentLang === 'en' ? 'id' : 'en';
+            changeLanguage(newLang);
+        });
+
+        // Load saved language preference
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            changeLanguage(savedLang);
+        });
+
+        // Slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        document.querySelector('.next').addEventListener('click', nextSlide);
+        document.querySelector('.prev').addEventListener('click', prevSlide);
+
+        // Auto-slide every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            menuToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                menuToggle.textContent = '☰';
+            });
+        });
+
+        // Copy function
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert(text + " copied!");
+        }
+    </script>
+</body>
+</html>
